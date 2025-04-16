@@ -1,0 +1,25 @@
+name: Get Kubeconfig
+description: |
+  Use OIDC to request a kubeconfig from Ibidem API.
+  
+  The kubeconfig will be written to `/tmp/kubectl/kubeconfig` and `KUBECONFIG` will be set to this path.
+branding:
+  color: blue
+  icon: download-cloud
+inputs:
+  audience:
+    description: The audience to use when requesting the OIDC token.
+    required: false
+    default: ibidem.no:deploy
+  api_url:
+    description: The root URL for Ibidem API.
+    required: false
+    default: https://api.ibidem.no
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/get_kubeconfig.sh
+      env:
+        AUDIENCE: ${{ inputs.audience }}
+        API_URL: ${{ inputs.api_url }}
+      shell: bash

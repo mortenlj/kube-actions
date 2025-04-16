@@ -1,0 +1,35 @@
+name: 'Leave ZeroTier'
+description: 'Leave a ZeroTier network, and delete node'
+branding:
+  color: blue
+  icon: upload-cloud
+inputs:
+  namespace:
+    description: The namespace to apply the manifests to.
+    required: false
+    default: 'default'
+  filename:
+    description: The filename of the manifests to apply.
+    required: false
+    default: 'deploy.yaml'
+  appname:
+    description: |
+      The name of the application the manifests relates to (in the form of `app`-labels on all resources).
+      Defaults to the name of the repository if not set.
+      i.e. `Hello-World` for `octocat/Hello-World`.
+    required: false
+  timeout:
+    description: How many seconds to wait for the apply to finish.
+    required: false
+    default: "60"
+runs:
+  using: "composite"
+  steps:
+    - run: ${{ github.action_path }}/apply_manifests.sh
+      env:
+        NAMESPACE: ${{ inputs.namespace }}
+        FILENAME: ${{ inputs.filename }}
+        APPNAME: ${{ inputs.appname }}
+        TIMEOUT: ${{ inputs.timeout }}
+        REPOSITORY: ${{ github.repository }}
+      shell: bash
