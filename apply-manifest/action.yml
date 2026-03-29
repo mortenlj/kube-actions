@@ -1,5 +1,5 @@
-name: 'Leave ZeroTier'
-description: 'Leave a ZeroTier network, and delete node'
+name: 'Apply manifests'
+description: 'Apply the given manifests to kubernetes'
 branding:
   color: blue
   icon: upload-cloud
